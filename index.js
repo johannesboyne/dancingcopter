@@ -2,8 +2,6 @@ var keypress = require('keypress');
 var arDrone = require('ar-drone');
 var control = arDrone.createUdpControl();
 
-var timer;
-
 var ref  = {};
 var pcmd = {};
 
@@ -21,17 +19,15 @@ function clearIt () {
 
 clearIt();
 
-var speed = 0.1;
-
 var keyMapper = {
-  'w'     : function () { pcmd.back             = -speed  } , // front
-  'a'     : function () { pcmd.left             = speed } , // left
-  's'     : function () { pcmd.back             = speed } , // back
-  'd'     : function () { pcmd.left             = -speed  } , // right
-  'right' : function () { pcmd.clockwise        = speed }, // counter-clockwise
-  'left'  : function () { pcmd.clockwise        = -speed} , // clockwise
-  'up'    : function () { pcmd.down             = -speed  } , // up
-  'down'  : function () { pcmd.down             = speed } , // down
+  'w'     : function () { pcmd.back             = pcmd.back - 0.1  } , // front
+  'a'     : function () { pcmd.left             = pcmd.left + 0.1 } , // left
+  's'     : function () { pcmd.back             = pcmd.back + 0.1 } , // back
+  'd'     : function () { pcmd.left             = pcmd.left - 0.1  } , // right
+  'right' : function () { pcmd.clockwise        = pcmd.clockwise + 0.1 }, // counter-clockwise
+  'left'  : function () { pcmd.clockwise        = pcmd.clockwise - 0.1} , // clockwise
+  'up'    : function () { pcmd.down             = pcmd.down - 0.1  } , // up
+  'down'  : function () { pcmd.down             = pcmd.down + 0.1 } , // down
   'x'     : function () { ref.fly               = false } , // land
   'y'     : function () { ref.fly               = true } , // takeoff
   'e'     : function () {setTimeout(function () { process.exit(1); }, 200);}, // emergency
@@ -40,9 +36,8 @@ var keyMapper = {
   }
 }
 
-
 function mapCommand (k) {
-  // console.log(k);
+  console.log(k);
   keyMapper[k]();
 }
 
@@ -58,20 +53,7 @@ setInterval(function () {
 }, 30);
 
 process.stdin.on('keypress', function (ch, key) {
-
-  if (key.ctrl) {
-    speed = 0.3;
-  } else {
-    speed = 0.1;
-  }
-
   mapCommand(key.name);
-  clearTimeout(timer);
-
-  timer = setTimeout(function () {
-    console.log('clear!');
-    clearIt();
-  }, 1000);
 });
 
 process.stdin.setRawMode(true);
