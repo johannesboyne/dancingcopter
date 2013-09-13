@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "ar-drone": "~0.2.0"
+    "ar-drone": "~0.2.0",
+    "keypress": "*"
   }
 }

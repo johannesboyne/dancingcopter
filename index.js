@@ -11,13 +11,9 @@ ref.emergency = true;
 keypress(process.stdin);
 
 function clearIt () {
-  pcmd.front = 0;
   pcmd.left = 0;
   pcmd.back = 0;
-  pcmd.right = 0;
   pcmd.clockwise = 0;
-  pcmd.counterClockwise = 0;
-  pcmd.up = 0;
   pcmd.down = 0;
 }
 
@@ -41,8 +37,6 @@ var keyMapper = {
 }
 
 function mapCommand (k) {
-  // clearIt();
-
   console.log(k);
   keyMapper[k]();
 }
